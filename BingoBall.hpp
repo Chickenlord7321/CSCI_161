@@ -20,6 +20,11 @@
 	using std::ostream;
 	using std::ostringstream;
 
+/**
+ * The BingoBall class is a simple object to illustrate the
+ * basic class type in VIU CSCI 161 2024 course.
+ * @author B.Bultena
+ */
 class BingoBall {
 
 private:
@@ -67,7 +72,6 @@ public:
 	 */
 	BingoBall(const BingoBall &copy) {
 		// This statement is added for the programmer's interest during runtime.
-		cout << "BingoBall copy constructor called\n";
 
 		this->num = copy.num;
 		this->inPlay = copy.inPlay;
@@ -81,7 +85,6 @@ public:
 	 */
 	BingoBall& operator=(const BingoBall &copy) {
 		// This statement is added for the programmer's interest during runtime.
-		cout << "BingoBall assignment copy function called.\n";
 
 		this->num = copy.num;
 		this->inPlay = copy.inPlay;
@@ -95,7 +98,6 @@ public:
 	~BingoBall() {
 		// This is what the compiler would do in the default case.
 		// Add an output notification when a BingoBall is deleted.
-		cout << "BingoBall destructor called.\n";
 	}
 
 	// accessor / modifiers
