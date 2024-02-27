@@ -1,78 +1,57 @@
-#include <iostream>
-#include <ctime>
-#include "BingoBall.hpp"
-#include "Cage.hpp"
-	using std::ostream;
+/*
+ * Author: Caleb Bronn
+ * Date: 16 Feb 2024
+ * Title: Assignment 5
+
+ * This program contains the main testing for two different implementations of 
+ * a Stack ADT.
+*/
+
+#include "Stack.hpp"
 	using std::cout;
 	using std::endl;
 
-/**
- * The main function is mainly used to test the Cage class thoroughly.
- * @return 0 as a matter of convention, to let the system know that the program has completed without errors.
- */
 int main() {
-	cout << "Creating a single cage with 3 empty spots:\n";
-	Cage cage;
-	cout << "Number of elements: "<<cage.get_num_elements() << endl;
-	cout << "Current state of the cage:\n";
-	cout << cage;
-	if (cage.is_empty()) {
-		cout << "is_empty behaved well.\n";
-	} else { 
-		cout << "CHECK is_empty"<< endl;
+	// Test doubles, since that's what I added as a possible data type.
+	double one = 1.1;
+	double two = 2.2;
+	double three = 3.3;
+	double four = 4.4;
+
+	Stack<double> stack_test;
+
+	// Test push() and top()
+	stack_test.push(one);
+	cout << "Added " << stack_test.top() << " to the stack\n"; 
+	stack_test.push(two);
+	cout << "Added " << stack_test.top() << " to the stack\n";
+	stack_test.push(three);
+	cout << "Added " << stack_test.top() << " to the stack\n";
+
+	// For Vector implementation, this also tests doubling the vector size.
+	stack_test.push(four);
+	cout << "Added " << stack_test.top() << " to the stack\n";
+
+	// Test pop()
+	cout << "\nRemoving all elements and printing them out one by one: "; 
+	for (int i = 0; i < int(four); i++) {
+		cout << "\n\t" << stack_test.pop();
 	}
 
-	srand(time(0));
-
-	cout <<"\nCreating 7 BingoBall objects:\n";
-	BingoBall b1(rand()%75+1);
-	BingoBall b2(rand()%75+1);
-	BingoBall b3(rand()%75+1);
-	BingoBall b4(rand()%75+1);
-	BingoBall b5(rand()%75+1);
-	BingoBall b6(rand()%75+1);
-	BingoBall b7(rand()%75+1);
-	
-	cout <<"\nAdding the first balls to the cage\n";
-	cage.insert(b1);
-	cage.insert(b2);
-	cage.insert(b3);
-	cout << "Current state of the cage:\n";
-	cout << cage;
-
-	// try removing one of them:
-	cout <<"\nRemoving the second ball from the cage:\n";
-	cage.remove(b2);
-	cout << "Current state of the cage:\n";
-	cout << cage;
-
-	// keep adding
-	cout << "\ninserting four more balls to into the cage:\n";
-	cage.insert(b4);
-	cage.insert(b5);
-	cage.insert(b6);
-	cage.insert(b7);
-	cout << "Current state of the cage:\n";
-	cout << cage;
-
-	BingoBall b_extra(rand()%75+1);
-	cout << "Created a bingo ball that is not going into the cage.\n";
-	cout << "contents\n" << cage <<endl;
-	cout << "It is "<<b_extra<<endl;
-	if (cage.contains(b_extra)) {
-		cout << "The cage already contains a ball equal to this one.\n";
-	} else {
-		cout << "This ball is not already in the cage.\n";
+	// Test is_empty() 
+	if (stack_test.is_empty()) {
+		cout << "\nStack is now empty.\n";
 	}
 
-	cout << "Trying to invoke the copy constructor\n";
-	Cage dup(cage);
-	cout << "The new one:\n";
-	cout << dup;
-	dup.remove(b6);
-	cout << "After "<<b6<<" is removed\n";
-	cout << dup << endl;
+	// Test StackException error catching
+	cout << "\nFinally, this should cause an exception to be thrown...\n";
+	try {
+		stack_test.pop();
+		cout << "No error was caught.";
+	} catch (StackException & error) {
+		cout << error << endl;
+	}
 
-	cout << "That's all for now\n";
-	return 0;
+	cout << "\nEverything works!" << endl;
+	return EXIT_SUCCESS;
 }
