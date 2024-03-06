@@ -1,78 +1,62 @@
+/*
+ * Author: Caleb Bronn
+ * Date: 2 Mar 2024
+ * Title: Assignment 6
+
+ * This program tests a Queue ADT, which has been implemented in two different 
+ * ways (using a linked list and an array). 
+*/
+
+#include "Queue.hpp"
 #include <iostream>
-#include <ctime>
-#include "BingoBall.hpp"
-#include "Cage.hpp"
-	using std::ostream;
 	using std::cout;
 	using std::endl;
 
-/**
- * The main function is mainly used to test the Cage class thoroughly.
- * @return 0 as a matter of convention, to let the system know that the program has completed without errors.
- */
+
 int main() {
-	cout << "Creating a single cage with 3 empty spots:\n";
-	Cage cage;
-	cout << "Number of elements: "<<cage.get_num_elements() << endl;
-	cout << "Current state of the cage:\n";
-	cout << cage;
-	if (cage.is_empty()) {
-		cout << "is_empty behaved well.\n";
-	} else { 
-		cout << "CHECK is_empty"<< endl;
+	cout << "Let's add the letters A through H in alphabetical order to the queue!\n\n";
+
+	string a = "A";
+	string b = "B";
+	string c = "C";
+	string d = "D";
+	string e = "E";
+	string f = "F";
+	string g = "G";
+	string h = "H";
+
+	Queue<string> q_test;
+
+	// Test enqueue() and peek()
+	cout << "Adding A through E to the linked list...\n";
+	q_test.enqueue(a);
+	q_test.enqueue(b);
+	q_test.enqueue(c);
+	q_test.enqueue(d);
+	q_test.enqueue(e); // Queue: A B C D E
+	cout << "Front of queue is: " << q_test.peek() << endl;  // A
+
+	cout << "\nRemoving A and B from the linked list...\n";
+	a = q_test.dequeue();
+	b = q_test.dequeue(); // Queue: C D E
+	cout << "Now front of queue is: " << q_test.peek() << "\n";  // C
+
+	cout << "\nAdding F through H to the linked list...\n";
+	q_test.enqueue(f);
+	q_test.enqueue(g);
+	q_test.enqueue(h); // Queue: C D E F G H
+
+	// Test is_empty() and dequeue()
+	cout << "\nAttempting to dequeue the whole list...\n";
+	while (!q_test.is_empty()) {
+		try {
+			cout << q_test.dequeue();  // Output: CDEFGH
+		} catch (QueueException & error) {
+			cout << error << endl;
+			cout << "Something has gone wrong\n";
+		}
 	}
 
-	srand(time(0));
-
-	cout <<"\nCreating 7 BingoBall objects:\n";
-	BingoBall b1(rand()%75+1);
-	BingoBall b2(rand()%75+1);
-	BingoBall b3(rand()%75+1);
-	BingoBall b4(rand()%75+1);
-	BingoBall b5(rand()%75+1);
-	BingoBall b6(rand()%75+1);
-	BingoBall b7(rand()%75+1);
-	
-	cout <<"\nAdding the first balls to the cage\n";
-	cage.insert(b1);
-	cage.insert(b2);
-	cage.insert(b3);
-	cout << "Current state of the cage:\n";
-	cout << cage;
-
-	// try removing one of them:
-	cout <<"\nRemoving the second ball from the cage:\n";
-	cage.remove(b2);
-	cout << "Current state of the cage:\n";
-	cout << cage;
-
-	// keep adding
-	cout << "\ninserting four more balls to into the cage:\n";
-	cage.insert(b4);
-	cage.insert(b5);
-	cage.insert(b6);
-	cage.insert(b7);
-	cout << "Current state of the cage:\n";
-	cout << cage;
-
-	BingoBall b_extra(rand()%75+1);
-	cout << "Created a bingo ball that is not going into the cage.\n";
-	cout << "contents\n" << cage <<endl;
-	cout << "It is "<<b_extra<<endl;
-	if (cage.contains(b_extra)) {
-		cout << "The cage already contains a ball equal to this one.\n";
-	} else {
-		cout << "This ball is not already in the cage.\n";
-	}
-
-	cout << "Trying to invoke the copy constructor\n";
-	Cage dup(cage);
-	cout << "The new one:\n";
-	cout << dup;
-	dup.remove(b6);
-	cout << "After "<<b6<<" is removed\n";
-	cout << dup << endl;
-
-	cout << "That's all for now\n";
-	return 0;
+	cout << "\n\nEverything works!\n";
+	return EXIT_SUCCESS;
 }
